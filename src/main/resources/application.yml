@@ -1,0 +1,51 @@
+# - http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# - https://github.com/spring-cloud/spring-cloud-config/blob/d9113a417dccff271744be3a4039e270b0cebd76/docs/src/main/asciidoc/spring-cloud-config.adoc#quick-start
+# - https://github.com/spring-cloud/spring-cloud-consul/blob/master/docs/src/main/asciidoc/spring-cloud-consul.adoc
+# - https://github.com/spring-cloud/spring-cloud-netflix/blob/8fb89b25d955fe175410853cea3b09333ef32d74/docs/src/main/asciidoc/spring-cloud-netflix.adoc
+# - https://github.com/Netflix
+# - https://github.com/Netflix/Hystrix/wiki/Configuration#intro
+# - https://github.com/Netflix/eureka/wiki/Configuring-Eureka
+# - https://github.com/Netflix/Turbine/wiki/Configuration-(1.x)
+
+
+#-----------------------------------------------------------------------------------------------
+# PROFILE LOCAL
+#-----------------------------------------------------------------------------------------------
+spring:
+  profiles: local
+#-----------------------------------------------------------------------------------------------
+# REDIS
+#-----------------------------------------------------------------------------------------------
+spring.redis:
+  url: # Connection URL. Overrides host, port, and password. User is ignored. Example: redis://user:password@example.com:6379
+  host: localhost # Redis server host.
+  password: # Login password of the redis server.
+  port: 6379 # Redis server port.
+  ssl: false # Whether to enable SSL support.
+  timeout: 15000 # Connection timeout.
+  database: 0 # Database index used by the connection factory.
+  #cluster.max-redirects: 3 # Maximum number of redirects to follow when executing commands across the cluster.
+  #cluster.nodes: 127.0.0.1:6379 # Comma-separated list of "host:port" pairs to bootstrap from.
+  #sentinel.master: master # Name of the Redis server.
+  #sentinel.nodes: 127.0.0.1:6379 # Comma-separated list of "host:port" pairs.
+  jedis.pool.max-active: 8 # Maximum number of connections that can be allocated by the pool at a given time. Use a negative value for no limit.
+  jedis.pool.max-idle: 8 # Maximum number of "idle" connections in the pool. Use a negative value to indicate an unlimited number of idle connections.
+  jedis.pool.max-wait: -1 # Maximum amount of time a connection allocation should block before throwing an exception when the pool is exhausted. Use a negative value to block indefinitely.
+  jedis.pool.min-idle: 0 # Target for the minimum number of idle connections to maintain in the pool. This setting only has an effect if it is positive.
+  lettuce.pool.max-active: 8 # Maximum number of connections that can be allocated by the pool at a given time. Use a negative value for no limit.
+  lettuce.pool.max-idle: 8 # Maximum number of "idle" connections in the pool. Use a negative value to indicate an unlimited number of idle connections.
+  lettuce.pool.max-wait: -1 # Maximum amount of time a connection allocation should block before throwing an exception when the pool is exhausted. Use a negative value to block indefinitely.
+  lettuce.pool.min-idle: 0 # Target for the minimum number of idle connections to maintain in the pool. This setting only has an effect if it is positive.
+  lettuce.shutdown-timeout: 100 # Shutdown timeout.
+
+#-----------------------------------------------------------------------------------------------
+# Logging configuration
+#-----------------------------------------------------------------------------------------------
+logging:
+  level:
+    org.springframework: WARN
+    com.tui.olp.availabilityloaderservice: DEBUG
+  pattern:
+    console: '%highlight{%-5p|%d{ISO8601}{GMT}|trace=%X{X-B3-TraceId},span=%X{X-B3-SpanId}|%c{1}|%m%ex%n}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=blue bold, DEBUG=green bold, TRACE=blue}'
+    file: '%-5p|%d{ISO8601}{GMT}|trace=%X{X-B3-TraceId},span=%X{X-B3-SpanId}|%c{1}|%m%ex%n'
+  config: classpath:log4j2-local.xml
