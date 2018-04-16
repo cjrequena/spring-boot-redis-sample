@@ -85,35 +85,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!-- Spring cloud -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
-        </dependency>
-
         <!-- Spring Cloud -->
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>${spring-cloud-dependencies.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
+            <artifactId>spring-cloud-config-client</artifactId>
         </dependency>
-
         <!-- Jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-
         <!-- Lettuce -->
         <dependency>
             <groupId>biz.paluch.redis</groupId>
             <artifactId>lettuce</artifactId>
             <version>4.4.4.Final</version>
         </dependency>
-
         <!--Boilerplate-->
         <dependency>
             <groupId>org.projectlombok</groupId>

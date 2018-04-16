@@ -1,6 +1,7 @@
 package com.sample.redis;
 
-import com.sample.redis.service.IRedisService;
+import com.sample.redis.entity.FooEntity;
+import com.sample.redis.repository.FooRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
@@ -23,8 +24,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MainApplication implements CommandLineRunner {
 
+
   @Autowired
-  private IRedisService service;
+  private FooRepository fooRepository;
 
   private static Class<MainApplication> mainApplicationClass = MainApplication.class;
 
@@ -44,20 +46,20 @@ public class MainApplication implements CommandLineRunner {
   }
 
   @Override public void run(String... strings) throws Exception {
-    boolean hasName = service.hasKey("name");
-    System.out.println("=======================================");
-    System.out.println("Is redis has a 'neme' key? -> " + hasName);
-    service.saveObject("name", "Hello redis cluster");
-    hasName = service.hasKey("name");
-    System.out.println("After add key 'name', Is redis has a 'neme' key? -> " + hasName);
-    if (hasName) {
-      String val = service.get("name", String.class);
-      System.out.println("The value of key 'neme' is " + val);
-    }
-    service.remove("name");
-    hasName = service.hasKey("name");
-    System.out.println("After remove the 'name' key , is redis has a 'neme' key? -> " + hasName);
-    System.out.println("=======================================");
+    boolean fooExist = fooRepository.exists("1");
+    System.out.println("Is there a Foo with id 1 -> " + fooExist);
+    fooRepository.save(new FooEntity("1", "Foo"));
+    System.out.println("After add a Foo");
+    fooExist = fooRepository.exists("1");
+    System.out.println("Is there a Foo with id 1 -> " + fooExist);
+    System.out.println(fooRepository.findOne("1").getName());
+    fooRepository.save(new FooEntity("1", "Foo updated"));
+    System.out.println("After Foo was updated");
+    System.out.println(fooRepository.findOne("1").getName());
+    fooRepository.delete(new FooEntity("1", "Foo"));
+    System.out.println("After Foo was removed");
+    fooExist = fooRepository.exists("1");
+    System.out.println("Is there a Foo with id 1 -> " + fooExist);
   }
 }
 
