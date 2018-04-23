@@ -40,11 +40,11 @@ public class RedisConfiguration {
   @Autowired
   private RedisConfigurationProperties redisConfigurationProperties;
 
-
   /**
    *
    * @return
    */
+  @ConditionalOnProperty(value = {"spring.redis.jedis.pool.max-active", "spring.redis.jedis.pool.max-idle", "spring.redis.jedis.pool.max-wait", "spring.redis.jedis.pool.min-idle"})
   @Bean
   public RedisConnectionFactory jedisConnectionFactory() {
     JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
@@ -61,12 +61,11 @@ public class RedisConfiguration {
     return jedisConnectionFactory;
   }
 
-
   /**
    *
    * @return
    */
-  @ConditionalOnProperty(value="spring.redis.cluster.nodes")
+  @ConditionalOnProperty(value = "spring.redis.cluster.nodes")
   @Bean
   public RedisConnectionFactory jedisConnectionFactoryCluster() {
     RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(redisConfigurationProperties.getCluster().getNodes());
@@ -78,7 +77,7 @@ public class RedisConfiguration {
    *
    * @return
    */
-  @ConditionalOnProperty(value="spring.redis.sentinel.nodes")
+  @ConditionalOnProperty(value = "spring.redis.sentinel.nodes")
   @Bean
   public RedisConnectionFactory jedisConnectionFactorySentinel() {
     RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration();
@@ -95,6 +94,7 @@ public class RedisConfiguration {
    *
    * @return
    */
+  @ConditionalOnProperty({"spring.redis.lettuce.pool.max-active", "spring.redis.lettuce.pool.max-idle", "spring.redis.lettuce.pool.max-wait", "spring.redis.lettuce.pool.min-idle"})
   @Bean
   @Primary
   public RedisConnectionFactory lettuceConnectionFactory() {
@@ -114,7 +114,7 @@ public class RedisConfiguration {
    *
    * @return
    */
-  @ConditionalOnProperty(value="spring.redis.cluster.nodes")
+  @ConditionalOnProperty(value = "spring.redis.cluster.nodes")
   @Bean
   public RedisConnectionFactory lettuceConnectionFactoryCluster() {
     RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(redisConfigurationProperties.getCluster().getNodes());
@@ -126,7 +126,7 @@ public class RedisConfiguration {
    *
    * @return
    */
-  @ConditionalOnProperty(value="spring.redis.sentinel.nodes")
+  @ConditionalOnProperty(value = "spring.redis.sentinel.nodes")
   @Bean
   public RedisConnectionFactory lettuceConnectionFactorySentinel() {
     RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration();
@@ -147,6 +147,17 @@ public class RedisConfiguration {
   public RedisTemplate redisTemplate() {
     RedisTemplate redisTemplate = new RedisTemplate();
     redisTemplate.setConnectionFactory(lettuceConnectionFactory());
+
+    // lettuce
+    redisTemplate.setConnectionFactory(lettuceConnectionFactory());
+    // redisTemplate.setConnectionFactory(lettuceConnectionFactoryCluster());
+    // redisTemplate.setConnectionFactory(lettuceConnectionFactorySentinel());
+
+    // jedis
+    //redisTemplate.setConnectionFactory(jedisConnectionFactory());
+    // redisTemplate.setConnectionFactory(jedisConnectionFactoryCluster());
+    // redisTemplate.setConnectionFactory(jedisConnectionFactorySentinel());
+    
     RedisSerializer<String> redisSerializer = new StringRedisSerializer();
     redisTemplate.setKeySerializer(redisSerializer);
     return redisTemplate;
@@ -159,7 +170,17 @@ public class RedisConfiguration {
   @Bean
   public StringRedisTemplate stringRedisTemplate() {
     StringRedisTemplate stringTemplate = new StringRedisTemplate();
+
+    // lettuce
     stringTemplate.setConnectionFactory(lettuceConnectionFactory());
+    // stringTemplate.setConnectionFactory(lettuceConnectionFactoryCluster());
+    // stringTemplate.setConnectionFactory(lettuceConnectionFactorySentinel());
+
+    // jedis
+    //stringTemplate.setConnectionFactory(jedisConnectionFactory());
+    // stringTemplate.setConnectionFactory(jedisConnectionFactoryCluster());
+    // stringTemplate.setConnectionFactory(jedisConnectionFactorySentinel());
+
     RedisSerializer<String> redisSerializer = new StringRedisSerializer();
     stringTemplate.setKeySerializer(redisSerializer);
     stringTemplate.setHashKeySerializer(redisSerializer);
