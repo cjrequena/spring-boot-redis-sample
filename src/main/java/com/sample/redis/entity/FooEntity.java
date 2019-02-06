@@ -5,6 +5,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * <p>
@@ -17,9 +19,9 @@ import org.springframework.data.redis.core.RedisHash;
  * @since JDK1.8
  */
 @Data
-@RedisHash
 @AllArgsConstructor
-public class FooEntity {
+@RedisHash(value = "foo")
+public class FooEntity implements Serializable {
 
   /**
    * Entity id
