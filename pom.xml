@@ -22,8 +22,8 @@
         <swagger-codegen-maven-plugin.version>2.3.1</swagger-codegen-maven-plugin.version>
 
         <!-- Spring -->
-        <spring-boot.version>1.5.11.RELEASE</spring-boot.version>
-        <spring-cloud-dependencies.version>Edgware.SR3</spring-cloud-dependencies.version>
+        <spring-boot.version>1.5.19.RELEASE</spring-boot.version>
+        <spring-cloud-dependencies.version>Edgware.SR5</spring-cloud-dependencies.version>
 
         <!-- Boilerplate -->
         <lombok.version>1.16.12</lombok.version>
