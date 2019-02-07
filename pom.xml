@@ -22,8 +22,8 @@
         <swagger-codegen-maven-plugin.version>2.3.1</swagger-codegen-maven-plugin.version>
 
         <!-- Spring -->
-        <spring-boot.version>1.5.19.RELEASE</spring-boot.version>
-        <spring-cloud-dependencies.version>Edgware.SR5</spring-cloud-dependencies.version>
+        <spring-boot.version>2.0.8.RELEASE</spring-boot.version>
+        <spring-cloud-dependencies.version>Finchley.SR2</spring-cloud-dependencies.version>
 
         <!-- Boilerplate -->
         <lombok.version>1.16.12</lombok.version>
@@ -54,6 +54,11 @@
     <!-- -->
     <dependencies>
         <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-properties-migrator</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -96,7 +101,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <!-- Jedis -->
         <dependency>
@@ -104,11 +109,11 @@
             <artifactId>jedis</artifactId>
         </dependency>
         <!-- Lettuce -->
-        <dependency>
-            <groupId>biz.paluch.redis</groupId>
-            <artifactId>lettuce</artifactId>
-            <version>4.4.4.Final</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>biz.paluch.redis</groupId>-->
+            <!--<artifactId>lettuce</artifactId>-->
+            <!--<version>4.4.4.Final</version>-->
+        <!--</dependency>-->
         <!--Boilerplate-->
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -1,13 +1,14 @@
-server:
-  port: ${SERVER_PORT:8080}
-  contextPath: /
-management:
-  context-path: /admin # Management endpoint context-path. For instance `/actuator`
-  security.enabled: false
+# ----------------------------------------
+# WEB PROPERTIES
+# ----------------------------------------
+# EMBEDDED SERVER CONFIGURATION (https://github.com/spring-projects/spring-boot/blob/v2.0.6.RELEASE/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/ServerProperties.java)
+server.servlet.context-path: / # Context path of the application.
+server.port: ${SERVER_PORT:8080} # Server HTTP port.
+
 ---
 spring:
   application:
-    name: sample-redis
+    name: spring-boot-redis-sample
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:local}
   cloud:
@@ -27,7 +28,7 @@ spring:
         # Register health check in consul. Useful during development of a service.
         registerHealthCheck: ${SPRING_CLOUD_CONSUL_DISCOVERY_REGISTERHEALTHCHECK:false}
         # Alternate server path to invoke for health checking
-        healthCheckPath: ${management.context-path}/health
+        healthCheckPath: ${server.servlet.context-path}/management/healthcheck
         # Custom health check url to override default
         #healthCheckUrl: ${SPRING_CLOUD_CONSUL_DISCOVERY_HEALTHCHECKURL}
         # How often to perform the health check (e.g. 10s), defaults to 10s.
@@ -37,11 +38,13 @@ spring:
         # Timeout to deregister services critical for longer than timeout (e.g. 30m).
         healthCheckCriticalTimeout: ${SPRING_CLOUD_CONSUL_DISCOVERY_HEALTHCHECKCRITICALTIMEOUT:10m}
         # Tags to use when registering service
-        tags: project_name=${project.name}, version=${project.version}, commit_id=${git.commit.id}, commit_time=${git.commit.time}, profiles_active=${spring.profiles.active}
+        tags: project_name=${spring.application.name}, maven_version=${project.version}, commit_id=${git.commit.id}, commit_time=${git.commit.time}, profiles_active=${spring.profiles.active}
         # Use ip address rather than hostname during registration
         prefer-ip-address: ${SPRING_CLOUD_CONSUL_DISCOVERY_PREFER_IP_ADDRESS:false}
         # IP address to use when accessing service (must also set preferIpAddress to use)
-        ipAddress: ${SPRING_CLOUD_CONSUL_DISCOVERY_IPADDRESS:localhost}
+        ipAddress: ${SPRING_CLOUD_CONSUL_DISCOVERY_IPADDRESS:127.0.0.1}
+        # Port to register the service under (defaults to listening port)
+        #port: ${SPRING_CLOUD_CONSUL_DISCOVERY_PORT}
     config:
       # Flag to say that remote configuration is enabled. (default false).
       enabled: ${SPRING_CLOUD_CONFIG_ENABLED:false}
@@ -54,11 +57,11 @@ spring:
         serviceId: ${SPRING_CLOUD_CONFIG_DISCOVERY_SERVICEID:config-server}
     inetutils:
       ignored-interfaces:
-        - vbox*
-        - bridge*
-        - docker0
-        - veth.*
-        - lo*
+      - vbox*
+      - bridge*
+      - docker0
+      - veth.*
+      - lo*
       preferredNetworks:
-        - 192.168
-        - 10.0
+      - 192.168
+      - 10.0

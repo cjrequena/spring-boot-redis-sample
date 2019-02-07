@@ -10,8 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.util.List;
-
 /**
  * <p>
  * <p>
@@ -54,19 +52,19 @@ public class MainApplication implements CommandLineRunner {
 
   @Override public void run(String... strings) throws Exception {
 
-    boolean fooExist = fooRepository.exists("1");
+    boolean fooExist = fooRepository.existsById("1");
     System.out.println("Is there a Foo with id 1 -> " + fooExist);
     fooRepository.save(new FooEntity("1", "Foo"));
     System.out.println("After add a Foo");
-    fooExist = fooRepository.exists("1");
+    fooExist = fooRepository.existsById("1");
     System.out.println("Is there a Foo with id 1 -> " + fooExist);
-    System.out.println(fooRepository.findOne("1").getName());
+    System.out.println(fooRepository.findById("1").get().getName());
     fooRepository.save(new FooEntity("1", "Foo updated"));
     System.out.println("After Foo was updated");
-    System.out.println(fooRepository.findOne("1").getName());
+    System.out.println(fooRepository.findById("1").get().getName());
     fooRepository.delete(new FooEntity("1", "Foo"));
     System.out.println("After Foo was removed");
-    fooExist = fooRepository.exists("1");
+    fooExist = fooRepository.existsById("1");
     System.out.println("Is there a Foo with id 1 -> " + fooExist);
     //--
 //    redisTemplate.opsForHash().put("foo", "1", new FooEntity("1", "Foo") );
