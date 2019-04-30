@@ -9,25 +9,18 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <!--
-        ================
-        Maven plugins
-        ================
-        -->
-        <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
-        <maven-resources-plugin.version>3.0.1</maven-resources-plugin.version>
-        <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
-        <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
-        <!-- Swagger -->
-        <swagger-codegen-maven-plugin.version>2.3.1</swagger-codegen-maven-plugin.version>
+        <maven.version>3.5</maven.version>
 
-        <!-- Spring -->
-        <spring-boot.version>2.0.8.RELEASE</spring-boot.version>
+        <!--https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies-->
+        <spring-boot-dependencies.version>2.0.9.RELEASE</spring-boot-dependencies.version>
+        <!--https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies-->
         <spring-cloud-dependencies.version>Finchley.SR2</spring-cloud-dependencies.version>
-
-        <!-- Boilerplate -->
-        <lombok.version>1.16.12</lombok.version>
-
+        <!-- Plugin versions -->
+        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+        <maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
+        <!---->
         <start-class>com.sample.redis.MainApplication</start-class>
     </properties>
     <!-- -->
@@ -36,8 +29,8 @@
             <!-- Spring boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
-                <version>${spring-boot.version}</version>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -108,17 +101,9 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-        <!-- Lettuce -->
-        <!--<dependency>-->
-            <!--<groupId>biz.paluch.redis</groupId>-->
-            <!--<artifactId>lettuce</artifactId>-->
-            <!--<version>4.4.4.Final</version>-->
-        <!--</dependency>-->
-        <!--Boilerplate-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -183,10 +168,10 @@
                         <configuration>
                             <rules>
                                 <requireJavaVersion>
-                                    <version>[1.8,)</version>
+                                    <version>[${java.version},)</version>
                                 </requireJavaVersion>
                                 <requireMavenVersion>
-                                    <version>[3.2,)</version>
+                                    <version>[${maven.version},)</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
@@ -195,15 +180,9 @@
             </plugin>
             <!-- -->
             <plugin>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>${swagger-codegen-maven-plugin.version}</version>
-            </plugin>
-            <!-- -->
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${spring-boot-dependencies.version}</version>
                 <configuration>
                     <mainClass>${start-class}</mainClass>
                     <classifier>exec</classifier>
