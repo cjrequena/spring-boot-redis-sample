@@ -48,11 +48,6 @@ public class RedisConfiguration {
   @Bean
   public RedisConnectionFactory jedisConnectionFactory() {
     JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-    jedisConnectionFactory.setDatabase(redisConfigurationProperties.getDatabase());
-    jedisConnectionFactory.setHostName(redisConfigurationProperties.getHost());
-    jedisConnectionFactory.setPassword(redisConfigurationProperties.getPassword());
-    jedisConnectionFactory.setUseSsl(redisConfigurationProperties.isSsl());
-    jedisConnectionFactory.setTimeout(redisConfigurationProperties.getTimeout());
     JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
     jedisPoolConfig.setMaxIdle(redisConfigurationProperties.getJedis().getPool().getMaxIdle());
     jedisPoolConfig.setMinIdle(redisConfigurationProperties.getJedis().getPool().getMinIdle());
@@ -100,13 +95,6 @@ public class RedisConfiguration {
   public RedisConnectionFactory lettuceConnectionFactory() {
     LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory();
     lettuceConnectionFactory.setDatabase(redisConfigurationProperties.getDatabase());
-    lettuceConnectionFactory.setHostName(redisConfigurationProperties.getHost());
-    lettuceConnectionFactory.setPassword(redisConfigurationProperties.getPassword());
-    lettuceConnectionFactory.setUseSsl(redisConfigurationProperties.isSsl());
-    lettuceConnectionFactory.setTimeout(redisConfigurationProperties.getTimeout());
-    lettuceConnectionFactory.setShutdownTimeout(redisConfigurationProperties.getLettuce().getShutdownTimeout());
-    DefaultLettucePool lettucePool = new DefaultLettucePool();
-
     return lettuceConnectionFactory;
   }
 
