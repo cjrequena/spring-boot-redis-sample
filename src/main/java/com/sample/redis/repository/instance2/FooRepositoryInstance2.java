@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * @see
  * @since JDK1.8
  */
-@Repository
+@Repository("fooRepositoryInstance2")
 public interface FooRepositoryInstance2 extends CrudRepository<FooEntity, String> {
 
 }

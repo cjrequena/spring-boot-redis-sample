@@ -12,8 +12,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.annotation.Resource;
 
 @Log4j2
 @RunWith(SpringRunner.class)
@@ -21,11 +25,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FooRepositoryIT {
 
-    @Autowired
-    private FooRepositoryInstance1 fooRepositoryInstance1;
+//    @Autowired
+//    private FooRepositoryInstance1 fooRepositoryInstance1;
+//
+//    @Autowired
+//    private FooRepositoryInstance2 fooRepositoryInstance2;
 
-    @Autowired
-    private FooRepositoryInstance2 fooRepositoryInstance2;
+    @Resource(name = "redisTemplateInstance1")
+    private RedisTemplate<String, Object> redisTemplateInstance1;
+
+    @Resource(name = "redisTemplateInstance2")
+    private RedisTemplate<String, Object> redisTemplateInstance2;
 
 
     @Before
@@ -38,12 +48,14 @@ public class FooRepositoryIT {
 
     @Test
     public void redis_test_instance1(){
-        fooRepositoryInstance1.save(new FooEntity("1", "FooInstance1"));
+        //fooRepositoryInstance1.save(new FooEntity("1", "FooInstance1"));
+        redisTemplateInstance1.opsForValue().set("1", new FooEntity("1", "FooInstance1"));
     }
 
     @Test
     public void redis_test_instance2(){
-        fooRepositoryInstance2.save(new FooEntity("1", "FooInstance2"));
+        //fooRepositoryInstance2.save(new FooEntity("1", "FooInstance2"));
+        redisTemplateInstance2.opsForValue().set("1", new FooEntity("1", "FooInstance2"));
     }
 
 }

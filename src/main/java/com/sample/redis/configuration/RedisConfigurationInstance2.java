@@ -44,7 +44,7 @@ public class RedisConfigurationInstance2 {
    * @return
    */
   @ConditionalOnProperty(value = {"spring.redis.instance2.jedis.pool.max-active", "spring.redis.instance2.jedis.pool.max-idle", "spring.redis.instance2.jedis.pool.max-wait", "spring.redis.instance2.jedis.pool.min-idle"})
-  @Bean
+  @Bean(name = "jedisConnectionFactoryInstance2")
   public RedisConnectionFactory jedisConnectionFactoryInstance2() {
     JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
     JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
@@ -60,7 +60,7 @@ public class RedisConfigurationInstance2 {
    * @return
    */
   @ConditionalOnProperty(value = "spring.redis.instance2.cluster.nodes")
-  @Bean
+  @Bean(name = "jedisConnectionFactoryClusterInstance2")
   public RedisConnectionFactory jedisConnectionFactoryClusterInstance2() {
     RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(redisConfigurationPropertiesInstance2.getCluster().getNodes());
     redisClusterConfiguration.setMaxRedirects(redisConfigurationPropertiesInstance2.getCluster().getMaxRedirects().intValue());
@@ -72,7 +72,7 @@ public class RedisConfigurationInstance2 {
    * @return
    */
   @ConditionalOnProperty(value = "spring.redis.instance2.sentinel.nodes")
-  @Bean
+  @Bean(name = "jedisConnectionFactorySentinelInstance2")
   public RedisConnectionFactory jedisConnectionFactorySentinelInstance2() {
     RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration();
     redisSentinelConfiguration.setMaster(redisConfigurationPropertiesInstance2.getSentinel().getMaster());
@@ -89,12 +89,17 @@ public class RedisConfigurationInstance2 {
    * @return
    */
   @ConditionalOnProperty({"spring.redis.instance2.lettuce.pool.max-active", "spring.redis.instance2.lettuce.pool.max-idle", "spring.redis.instance2.lettuce.pool.max-wait", "spring.redis.instance2.lettuce.pool.min-idle"})
-  @Bean
-  @Primary
+  @Bean(name = "lettuceConnectionFactoryClusterInstance2")
   public RedisConnectionFactory lettuceConnectionFactoryInstance2() {
     LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory();
     lettuceConnectionFactory.setDatabase(redisConfigurationPropertiesInstance2.getDatabase());
-    return lettuceConnectionFactory;
+    lettuceConnectionFactory.setHostName(redisConfigurationPropertiesInstance2.getHost());
+    lettuceConnectionFactory.setPort(redisConfigurationPropertiesInstance2.getPort());
+    lettuceConnectionFactory.setPassword(redisConfigurationPropertiesInstance2.getPassword());
+    lettuceConnectionFactory.setDatabase(redisConfigurationPropertiesInstance2.getDatabase());
+    lettuceConnectionFactory.setUseSsl(redisConfigurationPropertiesInstance2.isSsl());
+    lettuceConnectionFactory.setTimeout(redisConfigurationPropertiesInstance2.getTimeout());
+    lettuceConnectionFactory.setShutdownTimeout(redisConfigurationPropertiesInstance2.getLettuce().getShutdownTimeout());    return lettuceConnectionFactory;
   }
 
   /**
@@ -102,7 +107,7 @@ public class RedisConfigurationInstance2 {
    * @return
    */
   @ConditionalOnProperty(value = "spring.redis.instance2.cluster.nodes")
-  @Bean
+  @Bean(name = "lettuceConnectionFactoryClusterInstance2")
   public RedisConnectionFactory lettuceConnectionFactoryClusterInstance2() {
     RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(redisConfigurationPropertiesInstance2.getCluster().getNodes());
     redisClusterConfiguration.setMaxRedirects(redisConfigurationPropertiesInstance2.getCluster().getMaxRedirects().intValue());
@@ -114,7 +119,7 @@ public class RedisConfigurationInstance2 {
    * @return
    */
   @ConditionalOnProperty(value = "spring.redis.instance2.sentinel.nodes")
-  @Bean
+  @Bean(name = "lettuceConnectionFactorySentinelInstance2")
   public RedisConnectionFactory lettuceConnectionFactorySentinelInstance2() {
     RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration();
     redisSentinelConfiguration.setMaster(redisConfigurationPropertiesInstance2.getSentinel().getMaster());
@@ -130,7 +135,7 @@ public class RedisConfigurationInstance2 {
    *
    * @return
    */
-  @Bean
+  @Bean(name = "redisTemplateInstance2")
   public RedisTemplate redisTemplateInstance2() {
     RedisTemplate redisTemplate = new RedisTemplate();
     redisTemplate.setConnectionFactory(lettuceConnectionFactoryInstance2());
@@ -154,7 +159,7 @@ public class RedisConfigurationInstance2 {
    *
    * @return
    */
-  @Bean
+  @Bean(name = "stringRedisTemplateInstance2")
   public StringRedisTemplate stringRedisTemplateInstance2() {
     StringRedisTemplate stringTemplate = new StringRedisTemplate();
 

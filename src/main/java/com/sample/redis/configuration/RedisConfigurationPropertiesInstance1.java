@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring.redis.instance-1")
+@ConfigurationProperties(prefix = "spring.redis.instance1")
 public class RedisConfigurationPropertiesInstance1 {
 
   /**
