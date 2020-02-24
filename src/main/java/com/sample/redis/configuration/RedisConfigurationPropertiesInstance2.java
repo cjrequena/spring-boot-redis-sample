@@ -19,8 +19,8 @@ import java.util.List;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring.redis")
-public class RedisConfigurationProperties {
+@ConfigurationProperties(prefix = "spring.redis.instance2")
+public class RedisConfigurationPropertiesInstance2 {
 
   /**
    * Connection URL. Overrides host, port, and password. User is ignored. Example:

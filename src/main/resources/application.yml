@@ -16,11 +16,30 @@ spring:
 #-----------------------------------------------------------------------------------------------
 # REDIS
 #-----------------------------------------------------------------------------------------------
-spring.redis:
-  url: # Connection URL. Overrides host, port, and password. User is ignored. Example: redis://user:password@example.com:6379
+#spring.redis.instance-1:
+#  host: localhost # Redis server host.
+#  password: # Login password of the redis server.
+#  port: 6379 # Redis server port.
+#  ssl: false # Whether to enable SSL support.
+#  timeout: 15000 # Connection timeout.
+#  database: 0 # Database index used by the connection factory.
+#  #cluster.max-redirects: 3 # Maximum number of redirects to follow when executing commands across the cluster.
+#  #cluster.nodes: 127.0.0.1:6379 # Comma-separated list of "host:port" pairs to bootstrap from.
+#  #sentinel.master: master # Name of the Redis server.
+#  #sentinel.nodes: 127.0.0.1:6379 # Comma-separated list of "host:port" pairs.
+#  #jedis.pool.max-active: 8 # Maximum number of connections that can be allocated by the pool at a given time. Use a negative value for no limit.
+#  #jedis.pool.max-idle: 8 # Maximum number of "idle" connections in the pool. Use a negative value to indicate an unlimited number of idle connections.
+#  #jedis.pool.max-wait: -1 # Maximum amount of time a connection allocation should block before throwing an exception when the pool is exhausted. Use a negative value to block indefinitely.
+#  #jedis.pool.min-idle: 0 # Target for the minimum number of idle connections to maintain in the pool. This setting only has an effect if it is positive.
+#  lettuce.pool.max-active: 8 # Maximum number of connections that can be allocated by the pool at a given time. Use a negative value for no limit.
+#  lettuce.pool.max-idle: 8 # Maximum number of "idle" connections in the pool. Use a negative value to indicate an unlimited number of idle connections.
+#  lettuce.pool.max-wait: -1 # Maximum amount of time a connection allocation should block before throwing an exception when the pool is exhausted. Use a negative value to block indefinitely.
+#  lettuce.pool.min-idle: 0 # Target for the minimum number of idle connections to maintain in the pool. This setting only has an effect if it is positive.
+#  lettuce.shutdown-timeout: 100 # Shutdown timeout.
+
+spring.redis.instance2:
   host: localhost # Redis server host.
-  password: # Login password of the redis server.
-  port: 6379 # Redis server port.
+  port: 16379 # Redis server port.
   ssl: false # Whether to enable SSL support.
   timeout: 15000 # Connection timeout.
   database: 0 # Database index used by the connection factory.
@@ -37,7 +56,6 @@ spring.redis:
   lettuce.pool.max-wait: -1 # Maximum amount of time a connection allocation should block before throwing an exception when the pool is exhausted. Use a negative value to block indefinitely.
   lettuce.pool.min-idle: 0 # Target for the minimum number of idle connections to maintain in the pool. This setting only has an effect if it is positive.
   lettuce.shutdown-timeout: 100 # Shutdown timeout.
-
 #-----------------------------------------------------------------------------------------------
 # Logging configuration
 #-----------------------------------------------------------------------------------------------

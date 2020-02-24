@@ -1,14 +1,10 @@
 package com.sample.redis;
 
-import com.sample.redis.entity.FooEntity;
-import com.sample.redis.repository.FooRepository;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * <p>
@@ -23,15 +19,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 @Log4j2
 @SpringBootApplication
-public class MainApplication implements CommandLineRunner {
-
-
-  @Autowired
-  private FooRepository fooRepository;
-
-  @Autowired
-  private RedisTemplate<String, FooEntity> redisTemplate;
-
+public class MainApplication {
 
   private static Class<MainApplication> mainApplicationClass = MainApplication.class;
 
@@ -50,28 +38,5 @@ public class MainApplication implements CommandLineRunner {
     }
   }
 
-  @Override public void run(String... strings) throws Exception {
-
-    boolean fooExist = fooRepository.existsById("1");
-    System.out.println("Is there a Foo with id 1 -> " + fooExist);
-    fooRepository.save(new FooEntity("1", "Foo"));
-    System.out.println("After add a Foo");
-    fooExist = fooRepository.existsById("1");
-    System.out.println("Is there a Foo with id 1 -> " + fooExist);
-    System.out.println(fooRepository.findById("1").get().getName());
-    fooRepository.save(new FooEntity("1", "Foo updated"));
-    System.out.println("After Foo was updated");
-    System.out.println(fooRepository.findById("1").get().getName());
-    fooRepository.delete(new FooEntity("1", "Foo"));
-    System.out.println("After Foo was removed");
-    fooExist = fooRepository.existsById("1");
-    System.out.println("Is there a Foo with id 1 -> " + fooExist);
-    //--
-//    redisTemplate.opsForHash().put("foo", "1", new FooEntity("1", "Foo") );
-//    FooEntity foo = (FooEntity)redisTemplate.opsForHash().get("foo", "1");
-//    List<Object> fooes = redisTemplate.opsForHash().values("foo");
-//    redisTemplate.opsForHash().delete("foo", 1);
-    
-  }
 }
 

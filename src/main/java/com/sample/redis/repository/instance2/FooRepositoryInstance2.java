@@ -1,4 +1,4 @@
-package com.sample.redis.repository;
+package com.sample.redis.repository.instance2;
 
 import com.sample.redis.entity.FooEntity;
 import org.springframework.data.repository.CrudRepository;
@@ -16,6 +16,6 @@ import org.springframework.stereotype.Repository;
  * @since JDK1.8
  */
 @Repository
-public interface FooRepository extends CrudRepository<FooEntity, String> {
+public interface FooRepositoryInstance2 extends CrudRepository<FooEntity, String> {
 
 }
