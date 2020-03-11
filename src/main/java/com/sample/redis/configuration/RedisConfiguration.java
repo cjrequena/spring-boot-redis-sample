@@ -4,21 +4,28 @@ import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.DefaultLettucePool;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -145,7 +152,7 @@ public class RedisConfiguration {
     //redisTemplate.setConnectionFactory(jedisConnectionFactory());
     // redisTemplate.setConnectionFactory(jedisConnectionFactoryCluster());
     // redisTemplate.setConnectionFactory(jedisConnectionFactorySentinel());
-    
+
     RedisSerializer<String> redisSerializer = new StringRedisSerializer();
     redisTemplate.setKeySerializer(redisSerializer);
     return redisTemplate;
@@ -175,5 +182,32 @@ public class RedisConfiguration {
     stringTemplate.setValueSerializer(redisSerializer);
     return stringTemplate;
   }
+
+//  @Bean
+//  public RedisCacheManager redisCacheManager(LettuceConnectionFactory lettuceConnectionFactory) {
+//
+//    Map<String, RedisCacheConfiguration> mapRedisCacheConfiguration = new HashMap<>();
+//
+//    /** If we want to use JSON Serialized then use the below config snippet **/
+//    //    RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues()
+//    //      .entryTtl(Duration.ofHours(1))
+//    //      .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.json()));
+//
+//    /** If we want to use JAVA Serialized then use the below config snippet **/
+//    RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+//      .disableCachingNullValues()
+//      .entryTtl(Duration.ofHours(1))
+//      .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java()));
+//
+//    redisCacheConfiguration.usePrefix();
+//
+//    mapRedisCacheConfiguration.put("test-cache",redisCacheConfiguration);
+//
+//    return RedisCacheManager
+//      .builder(lettuceConnectionFactory)
+//      .withInitialCacheConfigurations(mapRedisCacheConfiguration)
+//      .build();
+//
+//  }
 
 }
