@@ -13,6 +13,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -100,7 +101,7 @@ public class RedisConfiguration {
   @Bean
   @Primary
   public RedisConnectionFactory lettuceConnectionFactory() {
-    LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory();
+    LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(new RedisStandaloneConfiguration(redisConfigurationProperties.getHost(), redisConfigurationProperties.getPort()));
     lettuceConnectionFactory.setDatabase(redisConfigurationProperties.getDatabase());
     return lettuceConnectionFactory;
   }
