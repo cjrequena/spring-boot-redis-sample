@@ -3,6 +3,7 @@ package com.sample.redis.service;
 import com.sample.redis.MainApplication;
 import com.sample.redis.entity.FooEntity;
 import lombok.extern.log4j.Log4j2;
+import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +30,7 @@ public class CustomFooServiceIT {
   @Test
   public void retrieveById() {
     FooEntity entity = this.customFooService.retrieveById("id::1");
+    Assert.assertTrue(entity.getName().equals("foo::1"));
     log.debug("name: {}", entity.getName());
   }
 }
